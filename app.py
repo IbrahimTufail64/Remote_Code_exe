@@ -16,7 +16,7 @@ scheduler = APScheduler()
 scheduler.init_app(app)
 
 #global variable 
-current_exe_script = "script.exe"
+current_exe_script = "scripts.exe"
 current_hex_script = "scripts.hex"
 target_url = "https://remote-code-cloud.onrender.com"
 
@@ -113,7 +113,12 @@ def fetch_execute_exe():
             
         file_path = os.path.join(UPLOAD_FOLDER, filename)
         print(file_path)
-        os.startfile(file_path)
+        # os.startfile(file_path) # for windows only
+        command = [
+            "wine",
+            f"./formdata_exe_files/{current_exe_script}"
+        ]
+        result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) # for linux
         # subprocess.call(["open", file_path])
             # result = subprocess.run(["chmod", "+x", file_path], check=True)
             # execution_result = subprocess.run([file_path], check=True)
@@ -222,8 +227,8 @@ def pool_for_hex():
         print(f"Exception occurred: {e}")  # Log any exception
         return str(e)
         
-scheduler.add_job(id='Scheduled Task', func=pool_for_exe, trigger='interval', seconds=2000000000)
-scheduler.add_job(id='Scheduled Task2', func=pool_for_hex, trigger='interval', seconds=200000000)
+scheduler.add_job(id='Scheduled Task', func=pool_for_exe, trigger='interval', seconds=20)
+scheduler.add_job(id='Scheduled Task2', func=pool_for_hex, trigger='interval', seconds=20)
 
 
 if __name__ == "__main__":
