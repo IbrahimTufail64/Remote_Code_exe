@@ -1,16 +1,8 @@
 #!/bin/bash
 
 # Update package lists
-echo "Updating package lists..."
-sudo apt update
-
-# Install Python3 and avrdude
-echo "Installing Python3 and avrdude..."
-sudo apt install -y python3 avrdude
-
-# Install Python3 Flask and subprocess (subprocess is part of Python standard library)
-echo "Installing Flask for Python3..."
-sudo apt install -y python3-flask
+./Scripts/activate
+python app.py
 
 # Confirm installations
 echo "Installation completed."
